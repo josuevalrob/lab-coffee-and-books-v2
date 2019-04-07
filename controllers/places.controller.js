@@ -83,6 +83,21 @@ module.exports.doEdit = (req, res, next) => {
     })
 }
 
+module.exports.delete = (req, res, next) => {
+  const id = req.params.id;
+
+  Place.findByIdAndDelete(id)
+    .then((place) => {
+      if (place) {
+        res.redirect('/places')
+      } else {
+        next(createError(404, 'Place not found'))
+      }
+    })
+    .catch((error) => next(error))
+}
+
+
 module.exports.details = (req, res, next) => {
   const id = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(id)) {
