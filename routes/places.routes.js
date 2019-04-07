@@ -7,9 +7,7 @@ router.get('/new', placesController.create);
 router.post('/', placesController.doCreate);
 
 // READ
-// list.hbs && singlePlace
 router.get('/', placesController.list);
-// details.hbs
 router.get('/:id', placesController.details);
 
 // UPDATE

@@ -10,8 +10,8 @@ const placeSchema = new mongoose.Schema({
     required: true   
     }
   },
- 
- /*{ timestamps: true }*/);
+  { timestamps: true }
+);
 
 placeSchema.index({ location: '2dsphere' });
 
