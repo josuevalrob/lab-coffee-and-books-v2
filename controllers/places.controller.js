@@ -39,23 +39,34 @@ module.exports.doCreate = (req, res, next) => {
     });
 }
 
+module.exports.edit = (req, res, next) => {
+  const id = req.params.id;
+  Place.findById(id)
+    .then(place => {
+      if (place) {
+        res.render('places/form', {place})
+      } else {
+        next(createError(404, 'Place not found'))
+      }
+    })
+    .catch(error => next(error));
+}
+
+
 module.exports.details = (req, res, next) => {
   const id = req.params.id;
-  console.log(id)
   if (!mongoose.Types.ObjectId.isValid(id)) {
     next(createError(404,'Places not found'))
   } else {
-    Place.findById(id)
-      .then(place => {
-        if (place) {
-
-              res.render('places/details', { place })
-          
-            .catch(next)
-        } else {
-          next(createError(404, 'place not found'))
-        }
-      })
-      .catch(error => next(error));
+  Place.findById(id)
+    .then(place => {
+      if (place) {
+        res.render('places/details', { place })        
+        // .catch(next) // what is this catch doing here?
+      } else {
+        next(createError(404, 'place not found'))
+      }
+    })
+    .catch(error => next(error));
   }
 }
