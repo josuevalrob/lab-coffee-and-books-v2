@@ -7,7 +7,6 @@ module.exports.list = (req, res, next) => {
   // if (req.query.place) {
   //   criteria.place = new RegExp(req.query.place, 'i');
   // }
-
   Place.find()
     .then(places => res.render('places/list', {places}))
     .catch(error => next(error));
@@ -16,21 +15,19 @@ module.exports.list = (req, res, next) => {
 
 module.exports.create = (req, res, next) => {
   const place = new Place();
-
   res.render('places/form', { place })
 }
 
 module.exports.doCreate = (req, res, next) => {
-  console.log('number1')
+  console.log(req.body) // -> { name: 'user 2', mainCategory: 'coffeshop' }
   const place = new Place({
     name: req.body.name,
     type: req.body.type
   })
+  console.log(place) // -> { type: [], _id: 5ca9cf25d545133292e82b07, name: 'user 2' }
   place.save()
-  .then(() => res.redirect(`/places/${place._id}`))
-
+    .then(() => res.redirect(`/places/${place._id}`))
     .catch((error) => {
-      // console.log('hola')
       if (error instanceof mongoose.Error.ValidationError) {
         res.render('places/form', {
           place,
@@ -41,6 +38,7 @@ module.exports.doCreate = (req, res, next) => {
       }
     });
 }
+
 module.exports.details = (req, res, next) => {
   const id = req.params.id;
   console.log(id)
