@@ -67,7 +67,6 @@ module.exports.doEdit = (req, res, next) => {
     type: 'Point',
     coordinates: [req.body.longitude, req.body.latitude]
   }
-  console.log(req.body)
   Place.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
     .then((place) => {
       if (place) {
@@ -119,6 +118,12 @@ module.exports.editCoordinates = (req, res, next) => {
     .catch(next)
 }
 
+module.exports.coordinates = (req, res, next) => {
+  console.log('inside coordinates')
+  Place.find()
+    .then((places) => res.json(places.map(u => u.location)))
+    .catch(next)
+}
 
 module.exports.details = (req, res, next) => {
   const id = req.params.id;

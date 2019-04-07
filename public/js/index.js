@@ -3,21 +3,21 @@ function initMap() {
   if (!mapContainer) return;
   
   const form = document.getElementById("places-form")
-  const id = form.getAttribute('data-id')  
 
   const myMap = new MyMap(mapContainer)  
   myMap.init()
 
   if (form) {
     setFormMapListeners(myMap)
+    const id = form.getAttribute('data-id')  
     if(id){
-      editUserMap(myMap, id)
+      editPlaceMap(myMap, id)
     }
-  } //else if (document.getElementById("users-list")) {
-  //   addUsersToMap(myMap)
-  // }
+  } else if (document.getElementById("place-list")) {
+    addPlacesToMap(myMap)
+  }
 }
-function editUserMap(myMap, id) {
+function editPlaceMap(myMap, id) {
   axios.get(`/places/${id}/coordinates`)
     .then(response => {
       myMap.addMarker(
@@ -27,18 +27,20 @@ function editUserMap(myMap, id) {
     })
     .catch(console.log)
 }
-// function addUsersToMap(myMap) {
-//   axios.get('/places/coordinates')
-//     .then(response => {
-//       response.data.forEach(coordinate => {
-//         myMap.addMarker(
-//           coordinate.coordinates[1],
-//           coordinate.coordinates[0]
-//         )
-//       })
-//     })
-//     .catch(console.log)
-// }
+function addPlacesToMap(myMap) {
+  console.log('inside dom js')
+  axios.get('/places/coordinates')
+    .then(response => {
+      console.log(response)
+      response.data.forEach(coordinate => {
+        myMap.addMarker(
+          coordinate.coordinates[1],
+          coordinate.coordinates[0]
+        )
+      })
+    })
+    .catch(console.log)
+}
 
 function setFormMapListeners(myMap) {
   myMap.onClick((event) => {
