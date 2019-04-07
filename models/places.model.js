@@ -8,10 +8,12 @@ const placeSchema = new mongoose.Schema({
     type: [String],
     enum: ['coffeshop', 'bookstore'],
     required: true   
-    }
   },
-  { timestamps: true }
-);
+  location: {
+    type: { type: String },
+    coordinates: [Number]
+  }
+},{ timestamps: true });
 
 placeSchema.index({ location: '2dsphere' });
 

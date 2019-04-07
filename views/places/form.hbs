@@ -37,10 +37,10 @@
       </select>
     </div>
 
-    {{!-- <div class="form-group">
+    <div class="form-group">
       <label>place latitude</label>
-      <input type="text" class="form-control {{#if errors.latitude }}is-invalid{{/if}}" name="latitude" value="{{player.latitude}}"
-        placeholder="Enter player latitude" id="lat">
+      <input type="text" class="form-control {{#if errors.latitude }}is-invalid{{/if}}" name="latitude" value="{{place.latitude}}"
+        placeholder="Enter place latitude" id="lat">
     
       {{#if errors.latitude }}
       <div class="invalid-feedback">
@@ -59,7 +59,8 @@
         {{errors.longitude}}
       </div>
       {{/if}}
-    </div> --}}
+    </div>
+
 
     <div class="d-flex">
       <button type="submit" class="btn btn-primary mr-3">Submit</button>

@@ -7,7 +7,7 @@ class MyMap {
 
   init() {
     this.googleMap = new google.maps.Map(this.container, {
-      zoom: 10,
+      zoom: 15,
       center: { lat: 41.3977381, lng: 2.190471916 }
     });
   }
