@@ -1,21 +1,34 @@
 function initMap() {
   const mapContainer = document.getElementById("map")
-
   if (!mapContainer) return;
-
-  const myMap = new MyMap(mapContainer)
   
+  const form = document.getElementById("places-form")
+  const id = form.getAttribute('data-id')  
+
+  const myMap = new MyMap(mapContainer)  
   myMap.init()
 
-  if (document.getElementById("places-form")) {
+  if (form) {
     setFormMapListeners(myMap)
+    if(id){
+      editUserMap(myMap, id)
+    }
   } //else if (document.getElementById("users-list")) {
   //   addUsersToMap(myMap)
   // }
 }
-
+function editUserMap(myMap, id) {
+  axios.get(`/places/${id}/coordinates`)
+    .then(response => {
+      myMap.addMarker(
+        response.data[1],
+        response.data[0]
+      )
+    })
+    .catch(console.log)
+}
 // function addUsersToMap(myMap) {
-//   axios.get('/users/coordinates')
+//   axios.get('/places/coordinates')
 //     .then(response => {
 //       response.data.forEach(coordinate => {
 //         myMap.addMarker(

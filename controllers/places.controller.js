@@ -52,7 +52,7 @@ module.exports.edit = (req, res, next) => {
       if (place) {
         res.render('places/form', {
           place,
-          categories: PLACE_CATEGORIES,
+          categories: PLACE_CATEGORIES
         })
       } else {
         next(createError(404, 'Place not found'))
@@ -99,6 +99,21 @@ module.exports.delete = (req, res, next) => {
       }
     })
     .catch((error) => next(error))
+}
+
+module.exports.editCoordinates = (req, res, next) => {
+  const id = req.params.id;
+  Place.findById(id)
+    .then(place => {
+      if (place) {
+        console.log(place)
+        res.json(place.location.coordinates)
+      } else {
+        //I hope not get into this... 
+        next(createError(404, 'Place not found'))
+      }
+    })
+    .catch(next)
 }
 
 

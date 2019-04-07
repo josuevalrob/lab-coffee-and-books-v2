@@ -8,6 +8,7 @@ router.post('/', placesController.doCreate);
 
 // READ
 router.get('/', placesController.list);
+router.get('/:id/coordinates', placesController.editCoordinates);
 router.get('/:id', placesController.details);
 
 // UPDATE
