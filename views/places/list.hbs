@@ -1,2 +1,7 @@
 <h1>I am a fucking list</h1>
 <a href="/places/new">Go to create a new place</a>
+<div class="list-group">
+  {{#each places as |place|}}
+  {{place.name}}
+  {{/each}}
+</div>
