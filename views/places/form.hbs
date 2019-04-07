@@ -28,8 +28,12 @@
    <div class="form-group">
       <label>Main Category</label>
       <select name="type" class="form-control">
-          <option value="coffeshop">Coffee Shop</option>
-          <option value="bookstore">Book Store</option>
+        {{#each categories as |category|}}
+          <option value="{{category}}"
+          {{#isMainCategory ../place category }}selected{{/isMainCategory}}>
+            {{category}}
+          </option>
+        {{/each}} 
       </select>
     </div>
 

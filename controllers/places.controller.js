@@ -1,6 +1,9 @@
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 const Place = require('../models/places.model');
+const constants = require('../constants')
+
+const PLACE_CATEGORIES = constants.PLACE_CATEGORIES
 
 module.exports.list = (req, res, next) => {
   // const criteria = {};
@@ -15,22 +18,21 @@ module.exports.list = (req, res, next) => {
 
 module.exports.create = (req, res, next) => {
   const place = new Place();
-  res.render('places/form', { place })
+  res.render('places/form', {categories: PLACE_CATEGORIES, place })
 }
 
 module.exports.doCreate = (req, res, next) => {
-  console.log(req.body) // -> { name: 'user 2', mainCategory: 'coffeshop' }
   const place = new Place({
     name: req.body.name,
     type: req.body.type
   })
-  console.log(place) // -> { type: [], _id: 5ca9cf25d545133292e82b07, name: 'user 2' }
   place.save()
     .then(() => res.redirect(`/places/${place._id}`))
     .catch((error) => {
       if (error instanceof mongoose.Error.ValidationError) {
         res.render('places/form', {
           place,
+          categories: PLACE_CATEGORIES,
           ...error
         })
       } else {
@@ -44,7 +46,10 @@ module.exports.edit = (req, res, next) => {
   Place.findById(id)
     .then(place => {
       if (place) {
-        res.render('places/form', {place})
+        res.render('places/form', {
+          place,
+          categories: PLACE_CATEGORIES,
+        })
       } else {
         next(createError(404, 'Place not found'))
       }
