@@ -6,7 +6,7 @@ router.get('/new', placesController.create);
 router.post('/', placesController.doCreate);
 
 router.get('/:id/edit', placesController.edit);
-// router.post('/:id', placesController.doEdit);
+router.post('/:id', placesController.doEdit);
 
 // list.hbs && singlePlace
 router.get('/', placesController.list);

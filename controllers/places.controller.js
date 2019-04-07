@@ -57,6 +57,31 @@ module.exports.edit = (req, res, next) => {
     .catch(error => next(error));
 }
 
+module.exports.doEdit = (req, res, next) => {
+  const id = req.params.id;
+
+  Place.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+    .then((place) => {
+      if (place) {
+        res.redirect(`/places/${place._id}`)
+      } else {
+        next(createError(404, 'place not found'))
+      } 
+    })
+    .catch((error) => {
+      if (error instanceof mongoose.Error.ValidationError) {
+        const place = new Place({ ...req.body, _id: id })
+        place.isNew = false
+        res.render('places/form', {
+          categories: PLACE_CATEGORIES,
+          place,
+          ...error
+        })
+      } else {
+        next(error);
+      }
+    })
+}
 
 module.exports.details = (req, res, next) => {
   const id = req.params.id;
