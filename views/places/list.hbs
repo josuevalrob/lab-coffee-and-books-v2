@@ -2,6 +2,6 @@
 <a href="/places/new">Go to create a new place</a>
 <div class="list-group">
   {{#each places as |place|}}
-  {{place.name}}
+    {{>singlePlace place=place}}
   {{/each}}
 </div>
