@@ -63,7 +63,11 @@ module.exports.edit = (req, res, next) => {
 
 module.exports.doEdit = (req, res, next) => {
   const id = req.params.id;
-
+  req.body.location = {
+    type: 'Point',
+    coordinates: [req.body.longitude, req.body.latitude]
+  }
+  console.log(req.body)
   Place.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
     .then((place) => {
       if (place) {
@@ -106,7 +110,6 @@ module.exports.editCoordinates = (req, res, next) => {
   Place.findById(id)
     .then(place => {
       if (place) {
-        console.log(place)
         res.json(place.location.coordinates)
       } else {
         //I hope not get into this... 
