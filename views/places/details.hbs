@@ -1,2 +1,23 @@
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ place.name }}</h5>
+        <p class="card-text">{{ place.type }}</p>
 
-{{place.name}}
+        <div class="d-flex">
+          <a href="/places/{{place._id}}/edit" class="btn btn-sm btn-success text-white mr-3">Edit place</a>
+
+          <form action="/places/{{place._id}}/delete" method="POST">
+            <button type="submit" class="btn btn-danger btn-sm text-white mr-3">
+              Delete place
+            </button>
+          </form>
+
+          <a href="/comments/new/{{place._id}}" class="btn btn-sm btn-primary text-white mr-3">Add comment</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
